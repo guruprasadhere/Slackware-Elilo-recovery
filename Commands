@@ -1,0 +1,20 @@
+Booting rescue GNU/Linux:
+You will need a Slackware (can be other, not very necessarily) LiveDVD.
+Mounting system-
+mount /dev/sda1 /mnt
+mount /dev/sdaX /mnt #X - your root partition
+mount /dev/sdaZ /mnt/boot #Z - your boot partition
+
+Mounting the necessary filesystems
+mount -t proc /proc /mnt/proc
+mount --rbind /sys /mnt/sys
+mount --rbind /dev /mnt/dev
+
+Chrooting to the system
+chroot /mnt
+# I also recommend you to check lilo configuration
+elilo
+mkinitrd -c -k 4.4.14 -m ext4 -f ext4 -r /dev/sdbX
+nano /etc/elilo.conf # Configure initrd
+exit
+reboot
